@@ -42,9 +42,6 @@ autostart=true
 autorestart=true
 stderr_logfile=/var/log/geth.err.log
 stdout_logfile=/var/log/geth.out.log
-systemctl enable supervisor
-systemctl start supervisor
-supervisorctl update
 EOT
 
 cat <<EOT >> $SUDO_SCRIPT
@@ -65,6 +62,9 @@ runuser -l geth -c "cd $ETC_DIRECTORY/go-ethereum && go get -t -v ./... && go bu
 mv /home/geth/geth /usr/bin/
 apt-get remove -y golang-go git
 sudo mv /tmp/ethereum-classic.conf /etc/supervisor/conf.d/ethereum-classic.conf
+systemctl enable supervisor
+systemctl start supervisor
+supervisorctl update
 EOT
 
 sudo bash $SUDO_SCRIPT
