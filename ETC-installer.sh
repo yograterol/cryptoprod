@@ -5,15 +5,10 @@
 
 HOME_GETH=/home/geth
 ETC_DIRECTORY=$HOME_GETH/go/src/github.com/ethereumproject
-set -e
-
-if [[ $EUID -ne 0 ]]; then
-    echo "Please run this script with sudo:"
-    echo "sudo $0 $*"
-    exit 1
-fi
+SUDO_SCRIPT=/tmp/sudoscript.sh
 
 echo "Hello, "$USER".  This script will install Ethereum Classic node."
+echo "You may be prompted for your password in a second."
 echo -n "Enter the amount (in Megabytes) of disk that you'll allocate for Ethereum Classic (ex. 512) [ENTER]: "
 read CACHE_SIZE
 
@@ -27,6 +22,9 @@ if [ $CACHE_SIZE -lt 512 ]; then
   CACHE_SIZE = 512
 fi
 
+cat <<EOT >> $SUDO_SCRIPT
+#!/usr/bin/env bash
+set -e
 echo "Cleaning before instalation..."
 echo "Removing geth user"
 userdel geth || true  2> /dev/null
@@ -53,10 +51,13 @@ autostart=true
 autorestart=true
 stderr_logfile=/var/log/geth.err.log
 stdout_logfile=/var/log/geth.out.log
-EOT
-
 systemctl enable supervisor
 systemctl start supervisor
 supervisorctl update
+EOT
+EOT
+
+sudo bash $SUDO_SCRIPT
+rm -f $SUDO_SCRIPT
 
 echo "ETC Node running... ETC files are in $HOME_GETH/.ethereum"
