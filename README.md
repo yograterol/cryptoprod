@@ -11,7 +11,7 @@ Compatible with Ubuntu 16.04 LTS or newer.
 ### Usage with ETC
 
 ```shell
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/yograterol/cryptoprod/master/ETC-installer.sh)"`
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/yograterol/cryptoprod/master/ETC-installer.sh)"
 ```
 
 ### Managing ETC daemon
