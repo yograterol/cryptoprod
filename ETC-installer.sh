@@ -41,7 +41,8 @@ WantedBy=multi-user.target
 EOT
 
 useradd -m -U geth
-add-apt-repository -yu ppa:longsleep/golang-backports
+add-apt-repository -y ppa:longsleep/golang-backports
+apt-get update
 apt-get install -y git build-essential software-properties-common golang-go
 sudo su - geth -- "
   mkdir -p $HOME_GETH/go/src/github.com/ethereumproject && \
