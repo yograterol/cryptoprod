@@ -39,7 +39,7 @@ Restart=always
 WantedBy=multi-user.target
 EOT
 
-adduser -m -U geth
+useradd -m -U geth
 add-apt-repository -yu ppa:longsleep/golang-backports
 apt-get install -y git build-essential software-properties-common golang-go
 sudo su - geth -- "
