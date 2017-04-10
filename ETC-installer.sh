@@ -6,13 +6,17 @@
 HOME_GETH=/home/geth
 ETC_DIRECTORY=$HOME_GETH/go/src/github.com/ethereumproject
 SUDO_SCRIPT=/tmp/sudoscript.sh
+CHECKSUM_FILE=ETC-installer.sh-CHECKSUM
 
-sha256sum -c ETC-installer.sh-CHECKSUM
+curl -fsSL -o $CHECKSUM_FILE https://raw.githubusercontent.com/yograterol/cryptoprod/master/$CHECKSUM_FILE
+sha256sum -c $CHECKSUM_FILE
 
 if [ $? -ne 0 ]; then
     echo "The checksum of this installer file is not valid."
+    rm -f $CHECKSUM_FILE
     exit 1
 fi
+rm -f $CHECKSUM_FILE
 
 echo "Hello, "$USER".  This script will install Ethereum Classic node."
 echo "You may be prompted for your password in a second."
