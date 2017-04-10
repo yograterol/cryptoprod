@@ -50,8 +50,8 @@ useradd -m -U geth
 add-apt-repository -y ppa:longsleep/golang-backports
 apt-get update
 apt-get install -y git build-essential software-properties-common golang-go
-su - geth -- "mkdir -p $ETC_DIRECTORY && cd $ETC_DIRECTORY && git clone https://github.com/ethereumproject/go-ethereum.git"
-su - geth -- "cd $ETC_DIRECTORY/go-ethereum && go get -t -v ./... && go build ./cmd/geth && cp geth $HOME_GETH && cd $HOME_GETH && rm -rf go"
+su - geth -c "mkdir -p $ETC_DIRECTORY && cd $ETC_DIRECTORY && git clone https://github.com/ethereumproject/go-ethereum.git"
+su - geth -c "cd $ETC_DIRECTORY/go-ethereum && go get -t -v ./... && go build ./cmd/geth && cp geth $HOME_GETH && cd $HOME_GETH && rm -rf go"
 mv /home/geth/geth /usr/bin/
 
 apt-get remove -y golang-go git
