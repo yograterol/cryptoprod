@@ -53,7 +53,7 @@ su - geth -- "
   mkdir -p $HOME_GETH/go/src/github.com/ethereumproject && \
   cd $HOME_GETH/go/src/github.com/ethereumproject && \
   git clone https://github.com/ethereumproject/go-ethereum.git && \
-  cd go-ethereum && go get -t -v ./.. && go build ./cmd/geth && \
+  cd go-ethereum && go get -t -v ./... && go build ./cmd/geth && \
   cp geth $HOME_GETH && \
   cd $HOME_GETH && rm -rf go
 "
