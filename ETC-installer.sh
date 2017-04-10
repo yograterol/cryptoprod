@@ -40,6 +40,11 @@ Restart=always
 WantedBy=multi-user.target
 EOT
 
+echo "Cleaning before instalation..."
+echo "Removing geth user"
+userdel geth || true  2> /dev/null
+rm -rf $HOME_GETH || true  2> /dev/null
+
 useradd -m -U geth
 add-apt-repository -y ppa:longsleep/golang-backports
 apt-get update
