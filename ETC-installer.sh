@@ -41,6 +41,8 @@ Description=Geth Service
 WorkingDirectory=/home/geth/
 ExecStart=/usr/bin/geth --fast --cache=$CACHE_SIZE
 Restart=always
+User=geth
+Group=geth
 
 [Install]
 WantedBy=multi-user.target
