@@ -27,6 +27,12 @@ if [ $CACHE_SIZE -lt 512 ]; then
   CACHE_SIZE = 512
 fi
 
+echo "Cleaning before instalation..."
+echo "Removing geth user"
+userdel geth || true  2> /dev/null
+rm -rf $HOME_GETH || true  2> /dev/null
+rm -f /etc/systemd/system/ethereum-classic.service
+
 cat <<EOT >> /etc/systemd/system/ethereum-classic.service
 [Unit]
 Description=Geth Service
@@ -39,11 +45,6 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOT
-
-echo "Cleaning before instalation..."
-echo "Removing geth user"
-userdel geth || true  2> /dev/null
-rm -rf $HOME_GETH || true  2> /dev/null
 
 useradd -m -U geth
 add-apt-repository -y ppa:longsleep/golang-backports
