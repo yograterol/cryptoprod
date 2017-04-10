@@ -32,9 +32,8 @@ cat <<EOT >> /etc/systemd/system/ethereum-classic.service
 Description=Geth Service
 
 [Service]
-Environment=
 WorkingDirectory=/home/geth/
-ExecStart=geth --fast --cache=$CACHE_SIZE
+ExecStart=/usr/bin/geth --fast --cache=$CACHE_SIZE
 Restart=always
 
 [Install]
