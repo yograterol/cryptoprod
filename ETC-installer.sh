@@ -4,6 +4,7 @@
 # This installer was support only for Ubuntu (for now)
 
 HOME_GETH=/home/geth
+set -e
 
 if [[ $EUID -ne 0 ]]; then
     echo "Please run this script with sudo:"
