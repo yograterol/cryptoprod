@@ -7,6 +7,13 @@ HOME_GETH=/home/geth
 ETC_DIRECTORY=$HOME_GETH/go/src/github.com/ethereumproject
 SUDO_SCRIPT=/tmp/sudoscript.sh
 
+sha256sum -c ETC-installer.sh-CHECKSUM
+
+if [ $? -ne 0 ]; then
+    echo "The checksum of this installer file is not valid."
+    exit 1
+fi
+
 echo "Hello, "$USER".  This script will install Ethereum Classic node."
 echo "You may be prompted for your password in a second."
 echo -n "Enter the amount (in Megabytes) of disk that you'll allocate for Ethereum Classic (ex. 512) [ENTER]: "
