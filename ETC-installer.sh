@@ -31,34 +31,32 @@ echo "Cleaning before instalation..."
 echo "Removing geth user"
 userdel geth || true  2> /dev/null
 rm -rf $HOME_GETH || true  2> /dev/null
-rm -f /etc/systemd/system/ethereum-classic.service
-
-cat <<EOT >> /etc/systemd/system/ethereum-classic.service
-[Unit]
-Description=Geth Service
-
-[Service]
-WorkingDirectory=/home/geth/
-ExecStart=sudo su - geth -c "/usr/bin/geth --fast --cache=$CACHE_SIZE"
-Restart=always
-User=geth
-Group=geth
-
-[Install]
-WantedBy=multi-user.target
-EOT
+rm -f /etc/supervisor/conf.d/ethereum-classic.conf
 
 useradd -m -U geth
 add-apt-repository -y ppa:longsleep/golang-backports
 apt-get update
 apt-get upgrade -y
-apt-get install -y git build-essential software-properties-common golang-go
+apt-get install -y git build-essential software-properties-common golang-go supervisor
 runuser -l geth -c "mkdir -p $ETC_DIRECTORY && cd $ETC_DIRECTORY && git clone https://github.com/ethereumproject/go-ethereum.git"
 runuser -l geth -c "cd $ETC_DIRECTORY/go-ethereum && go get -t -v ./... && go build ./cmd/geth && cp geth $HOME_GETH && cd $HOME_GETH && rm -rf go"
 mv /home/geth/geth /usr/bin/
 
 apt-get remove -y golang-go git
 
-systemctl daemon-reload
-systemctl enable ethereum-classic.service
-systemctl start ethereum-classic.service
+cat <<EOT >> /etc/supervisor/conf.d/ethereum-classic.conf
+[program:ethereum-classic]
+user=geth
+directory=/home/geth
+command=/usr/bin/geth --fast --cache=$CACHE_SIZE
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/geth.err.log
+stdout_logfile=/var/log/geth.out.log
+EOT
+
+systemctl enable supervisor
+systemctl start supervisor
+supervisorctl update
+
+echo "ETC Node running... ETC files are in $HOME_GETH/.ethereum"
