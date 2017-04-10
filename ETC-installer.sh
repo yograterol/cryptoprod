@@ -4,6 +4,7 @@
 # This installer was support only for Ubuntu (for now)
 
 HOME_GETH=/home/geth
+ETC_DIRECTORY=$HOME_GETH/go/src/github.com/ethereumproject
 set -e
 
 if [[ $EUID -ne 0 ]]; then
@@ -50,12 +51,13 @@ add-apt-repository -y ppa:longsleep/golang-backports
 apt-get update
 apt-get install -y git build-essential software-properties-common golang-go
 su - geth -- "
-  mkdir -p $HOME_GETH/go/src/github.com/ethereumproject && \
-  cd $HOME_GETH/go/src/github.com/ethereumproject && \
-  git clone https://github.com/ethereumproject/go-ethereum.git && \
-  cd go-ethereum && go get -t -v ./... && go build ./cmd/geth && \
-  cp geth $HOME_GETH && \
-  cd $HOME_GETH && rm -rf go
+  mkdir -p $ETC_DIRECTORY && \
+  cd $ETC_DIRECTORY && \
+  git clone https://github.com/ethereumproject/go-ethereum.git
+"
+su - geth -- "
+  cd $ETC_DIRECTORY/go-ethereum && go get -t -v ./... && go build ./cmd/geth && \
+  cp geth $HOME_GETH && cd $HOME_GETH && rm -rf go
 "
 mv /home/geth/geth /usr/bin/
 
