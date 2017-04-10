@@ -51,6 +51,7 @@ EOT
 useradd -m -U geth
 add-apt-repository -y ppa:longsleep/golang-backports
 apt-get update
+apt-get upgrade -y
 apt-get install -y git build-essential software-properties-common golang-go
 runuser -l geth -c "mkdir -p $ETC_DIRECTORY && cd $ETC_DIRECTORY && git clone https://github.com/ethereumproject/go-ethereum.git"
 runuser -l geth -c "cd $ETC_DIRECTORY/go-ethereum && go get -t -v ./... && go build ./cmd/geth && cp geth $HOME_GETH && cd $HOME_GETH && rm -rf go"
