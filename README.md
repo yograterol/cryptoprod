@@ -10,6 +10,8 @@ Compatible with Ubuntu 16.04 LTS or newer.
 
 ### Usage with ETC
 
-`sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/yograterol/cryptoprod/master/ETC-installer.sh)"`
+```shell
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/yograterol/cryptoprod/master/ETC-installer.sh)"`
+```
 
 Help the cause sending a donation in Ethereum Classic: `0x2140ee3413a79f814de83535aabd77785d903c79`

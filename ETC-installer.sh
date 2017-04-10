@@ -39,7 +39,7 @@ Description=Geth Service
 
 [Service]
 WorkingDirectory=/home/geth/
-ExecStart=/usr/bin/geth --fast --cache=$CACHE_SIZE
+ExecStart=sudo su - geth -c "/usr/bin/geth --fast --cache=$CACHE_SIZE"
 Restart=always
 User=geth
 Group=geth
